@@ -2,6 +2,10 @@
 
 
 #include "Items/Item.h"
+#include "DrawDebugHelpers.h"
+#include "TestEnvironment/DebugMacro.h"
+
+
 
 // Sets default values
 AItem::AItem()
@@ -15,29 +19,32 @@ AItem::AItem()
 void AItem::BeginPlay()
 {
 	Super::BeginPlay();
-	UE_LOG(LogTemp, Error, TEXT("Item spawned"));
-
-	if (GEngine)
-	{
-		GEngine->AddOnScreenDebugMessage(1, 5.f, FColor::Red, TEXT("Item spawned"));
-	}
 	
+	FVector Location = GetActorLocation();
+	FVector Forward = GetActorForwardVector();
+	UWorld* World = GetWorld();
+		
 }
 
 // Called every frame
 void AItem::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	UE_LOG(LogTemp, Warning, TEXT("Delta time: %f"), DeltaTime);
-	
-	if (GEngine)
-	{
-		FString name = GetName();
-		FString msg = FString::Printf(TEXT("Item name: %s"), *name);
-		GEngine->AddOnScreenDebugMessage(1, 5.f, FColor::Red, msg);
 
-		UE_LOG(LogTemp, Warning, TEXT("Item name: %s"), *name);
-	}
+	//Movement speed in cm/s
+	float MovementSpeed = 50.f;
+	float RotationSpeed = 50.f;
+
+	//MovementSpeed * DeltaTime (cm/s) * (s/frame) = (cm/frame)
+	AddActorWorldOffset(FVector(MovementSpeed * DeltaTime, 0.f, 0.f));
+	AddActorWorldRotation(FRotator(0.f, RotationSpeed * DeltaTime, 0.f));
+
+
+	DRAW_DEBUG_SPHERE_ONEFRAME(GetActorLocation())
+	//DRAW_DEBUG_LINE_ONEFRAME(Location, Location + Forward * 100)
+	//DRAW_DEBUG_POINT_ONEFRAME(Location)
+		DRAW_DEBUG_VECTOR_ONEFRAME(GetActorLocation(), GetActorLocation() + GetActorForwardVector() * 100)
+	
 	
 }
 
