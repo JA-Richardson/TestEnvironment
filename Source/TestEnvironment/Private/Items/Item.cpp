@@ -8,10 +8,11 @@
 
 
 // Sets default values
-AItem::AItem()
+AItem::AItem() : Timer(0), Amplitude(.25f), TimeConstant(5.f)
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+	
 
 }
 
@@ -31,15 +32,11 @@ void AItem::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	//Movement speed in cm/s
-	float MovementSpeed = 50.f;
-	float RotationSpeed = 50.f;
+	Timer += DeltaTime;
 
-	//MovementSpeed * DeltaTime (cm/s) * (s/frame) = (cm/frame)
-	AddActorWorldOffset(FVector(MovementSpeed * DeltaTime, 0.f, 0.f));
-	AddActorWorldRotation(FRotator(0.f, RotationSpeed * DeltaTime, 0.f));
+	float DeltaZ = Amplitude * FMath::Sin(Timer * TimeConstant);
 
-
+	AddActorWorldOffset(FVector(0, 0, DeltaZ), true);
 	DRAW_DEBUG_SPHERE_ONEFRAME(GetActorLocation())
 	//DRAW_DEBUG_LINE_ONEFRAME(Location, Location + Forward * 100)
 	//DRAW_DEBUG_POINT_ONEFRAME(Location)
