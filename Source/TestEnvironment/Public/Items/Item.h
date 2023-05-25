@@ -25,6 +25,14 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sine Parameters")
 	float TimeConstant;
 
+	UFUNCTION(BlueprintPure, Category = "Sine Parameters")
+	float TransformedSine();
+
+	UFUNCTION(BlueprintPure, Category = "Sine Parameters")
+	float TransformedCosine();
+
+	template<typename T>
+	T Avg(T First, T Second);
 	
 	
 public:	
@@ -34,7 +42,13 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	float RunTimer;
 
-	
-	
+	UPROPERTY(VisibleAnywhere)
+	UStaticMeshComponent* ItemMesh;
 
 };
+
+template<typename T>
+inline T AItem::Avg(T First, T Second)
+{
+	return (First + Second) / 2;
+}
