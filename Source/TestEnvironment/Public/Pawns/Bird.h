@@ -14,16 +14,23 @@ class TESTENVIRONMENT_API ABird : public APawn
 public:
 	// Sets default values for this pawn's properties
 	ABird();
-
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
-public:	
-	// Called every frame
+// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+protected:
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
+	void MoveForward(float Value);
+
+private:
+	UPROPERTY(VisibleAnywhere)
+		class UCapsuleComponent* Capsule;
+	UPROPERTY(VisibleAnywhere)
+		class USkeletalMeshComponent* BirdMesh;
+
+
+	
 
 };

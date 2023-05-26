@@ -19,6 +19,8 @@ ADrone::ADrone()
 	DroneMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("DroneMesh"));
 	DroneMesh->SetupAttachment(Capsule);
 
+	
+
 }
 
 // Called when the game starts or when spawned
