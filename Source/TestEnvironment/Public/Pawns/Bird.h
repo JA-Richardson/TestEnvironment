@@ -21,12 +21,16 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	
 	void MoveForward(float Value);
+	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input Mapping")
 	class UInputMappingContext* BirdMappingContext;
+	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input Mapping")
 	class UInputAction* MoveAction;
 
@@ -35,6 +39,7 @@ protected:
 private:
 	UPROPERTY(VisibleAnywhere)
 		class UCapsuleComponent* Capsule;
+	
 	UPROPERTY(VisibleAnywhere)
 		class USkeletalMeshComponent* BirdMesh;
 
